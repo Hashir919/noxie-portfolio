@@ -1,0 +1,115 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@300;400;500;600;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-display: 'Outfit', sans-serif;
+  
+  --color-base: #FDFBFF;
+  --color-surface: #FFFFFF;
+  --color-soft-purple: #9A8CFF;
+  --color-soft-pink: #FFB7D5;
+  --color-text-main: #1D1B20;
+  --color-text-dim: #49454E;
+  --color-accent: #6750A4;
+  
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-crystal: crystalFloat 4s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes crystalFloat {
+  0%, 100% { transform: translateY(0px) scale(1); }
+  50% { transform: translateY(-15px) scale(1.02); }
+}
+
+:root {
+  background-color: var(--color-base);
+  color: var(--color-text-main);
+}
+
+body {
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 50% 50%, rgba(154, 140, 255, 0.05) 0%, transparent 100%);
+}
+
+.container-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 1rem;
+  max-width: 1536px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-grid {
+    gap: 1.5rem;
+    padding: 0 2.5rem;
+  }
+}
+
+.title-gradient {
+  background: linear-gradient(135deg, #1D1B20 20%, #6750A4 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 0.95;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 1);
+  box-shadow: 0 8px 32px -4px rgba(154, 140, 255, 0.1);
+}
+
+.crystal-glow {
+  box-shadow: 0 0 60px 10px rgba(154, 140, 255, 0.15);
+}
+
+.bg-grain {
+  position: fixed;
+  inset: 0;
+  background-image: url("https://www.transparenttextures.com/patterns/p6.png");
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 50;
+}
+
+::selection {
+  background-color: var(--color-soft-purple);
+  color: #fff;
+}
+
+
+.bg-text {
+  font-size: 15vw;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--color-soft-purple);
+  opacity: 0.1;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.soft-glow {
+  filter: blur(80px);
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+
+.card-hover {
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.card-hover:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 24px rgba(154, 140, 255, 0.15);
+}
+
