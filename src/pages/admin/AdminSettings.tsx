@@ -16,17 +16,42 @@ export default function AdminSettings() {
     setSaved(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSave = async (dataToSave?: any) => {
+    const data = dataToSave || formData;
     setLoading(true);
     try {
-      await updateGlobalSettings(formData);
+      await updateGlobalSettings(data);
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     } catch (e) {
       alert('Failed to save settings');
     }
     setLoading(false);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    await handleSave();
+  };
+
+  // Get only social links with their original indices preserved
+  const socialLinks = (formData.nav_links || [])
+    .map((link: any, originalIndex: number) => ({ ...link, _originalIndex: originalIndex }))
+    .filter((link: any) => link.type === 'social');
+
+  const handleRemoveSocialLink = async (originalIndex: number) => {
+    const updatedLinks = (formData.nav_links || []).filter((_: any, i: number) => i !== originalIndex);
+    const updatedFormData = { ...formData, nav_links: updatedLinks };
+    setFormData(updatedFormData);
+    // Auto-save to persist the deletion to database immediately
+    await handleSave(updatedFormData);
+  };
+
+  const handleUpdateSocialLink = (originalIndex: number, field: string, value: string) => {
+    const updated = [...formData.nav_links];
+    updated[originalIndex] = { ...updated[originalIndex], [field]: value };
+    setFormData({ ...formData, nav_links: updated });
+    setSaved(false);
   };
 
   return (
@@ -76,48 +101,30 @@ export default function AdminSettings() {
           </div>
           
           <div className="space-y-4">
-            {(formData.nav_links || []).map((link: any, index: number) => {
-               if (link.type !== 'social') return null;
-               
-               return (
-                 <div key={index} className="flex gap-4 items-center bg-black/10 p-4 rounded-xl">
+            {socialLinks.map((link: any) => (
+                 <div key={link._originalIndex} className="flex gap-4 items-center bg-black/10 p-4 rounded-xl">
                    <input 
                      placeholder="Platform (e.g. Instagram)"
                      value={link.name}
-                     onChange={(e) => {
-                       const updated = [...formData.nav_links];
-                       updated[index].name = e.target.value;
-                       setFormData({ ...formData, nav_links: updated });
-                       setSaved(false);
-                     }}
+                     onChange={(e) => handleUpdateSocialLink(link._originalIndex, 'name', e.target.value)}
                      className="bg-transparent w-1/3 outline-none text-sm font-bold text-text-main"
                    />
                    <input 
                      placeholder="URL (https://...)"
                      value={link.href}
-                     onChange={(e) => {
-                       const updated = [...formData.nav_links];
-                       updated[index].href = e.target.value;
-                       setFormData({ ...formData, nav_links: updated });
-                       setSaved(false);
-                     }}
+                     onChange={(e) => handleUpdateSocialLink(link._originalIndex, 'href', e.target.value)}
                      className="bg-transparent flex-1 outline-none text-sm text-text-dim"
                    />
                    <button 
                      type="button"
-                     onClick={() => {
-                       const updated = formData.nav_links.filter((_: any, i: number) => i !== index);
-                       setFormData({ ...formData, nav_links: updated });
-                       setSaved(false);
-                     }}
+                     onClick={() => handleRemoveSocialLink(link._originalIndex)}
                      className="text-red-400 hover:text-red-300 text-[10px] uppercase font-bold tracking-[2px] px-2"
                    >
                      REMOVE
                    </button>
                  </div>
-               );
-            })}
-            {!(formData.nav_links || []).some((l: any) => l.type === 'social') && (
+            ))}
+            {socialLinks.length === 0 && (
                <p className="text-text-dim text-xs italic">No social links added yet.</p>
             )}
           </div>

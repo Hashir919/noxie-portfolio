@@ -97,22 +97,22 @@ export default function Home() {
           </div>
 
           {/* Center Mockup */}
-          <div className="col-span-12 md:col-span-4 flex justify-center py-6 md:py-10">
+          <div className="col-span-12 md:col-span-4 flex justify-center items-center py-6 md:py-0">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-              className="relative w-full max-w-[460px] flex justify-center"
+              className="relative w-full flex justify-center"
             >
-              <div className="relative w-[300px] sm:w-[340px] lg:w-[460px] aspect-square rounded-[40px] md:rounded-[60px] glass-card border-[1px] border-white shadow-[0_40px_80px_-20px_rgba(154,140,255,0.15)] flex items-center justify-center overflow-hidden">
-                 <div className="absolute top-0 left-0 right-0 flex justify-center pt-8 md:pt-10 text-[10px] uppercase font-bold tracking-[6px] text-accent/40 z-20">
+              <div className="relative w-[280px] sm:w-[320px] lg:w-[380px] aspect-[3/4] rounded-[40px] md:rounded-[60px] glass-card border-[1px] border-white shadow-[0_40px_80px_-20px_rgba(154,140,255,0.15)] flex items-center justify-center overflow-hidden">
+                 <div className="absolute top-0 left-0 right-0 flex justify-center pt-6 md:pt-8 text-[10px] uppercase font-bold tracking-[6px] text-accent/40 z-20">
                    SOFT AESTHETICS
                  </div>
                  <div className="absolute w-64 h-64 bg-accent/15 blur-[120px] rounded-full" />
                  <motion.div 
                    animate={{ y: [0, -14, 0], scale: [1, 1.02, 1] }}
                    transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                   className="relative w-full h-full flex items-center justify-center p-6"
+                   className="relative w-full h-full flex items-center justify-center p-4"
                  >
                    <div className="absolute w-56 h-56 bg-accent/20 blur-[100px] rounded-full crystal-glow" />
                    <img 
@@ -121,8 +121,8 @@ export default function Home() {
                      className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(154,140,255,0.4)]"
                    />
                  </motion.div>
-                 <div className="absolute bottom-0 left-0 right-0 pb-8 px-10 text-center z-20">
-                    <div className="w-10 h-0.5 bg-accent/20 mx-auto mb-4" />
+                 <div className="absolute bottom-0 left-0 right-0 pb-6 px-8 text-center z-20">
+                    <div className="w-10 h-0.5 bg-accent/20 mx-auto mb-3" />
                     <p className="text-[9px] uppercase tracking-[4px] text-text-dim mb-1">Portfolio Reveal</p>
                  </div>
               </div>
