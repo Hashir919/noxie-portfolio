@@ -28,7 +28,7 @@ function ScrollToTop() {
 }
 
 export default function App() {
-  const { globalSettings, fetchAuthSession, fetchData } = useStore();
+  const { globalSettings, fetchAuthSession, fetchData, loading } = useStore();
 
   useEffect(() => {
     fetchAuthSession();
@@ -41,6 +41,15 @@ export default function App() {
       document.title = globalSettings.site_title || 'Dynamic Portfolio';
     }
   }, [globalSettings]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-base flex flex-col items-center justify-center text-text-main gap-4">
+        <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin"></div>
+        <div className="text-[10px] uppercase tracking-[4px] font-bold text-text-dim">Loading Data...</div>
+      </div>
+    );
+  }
 
   return (
     <BrowserRouter>

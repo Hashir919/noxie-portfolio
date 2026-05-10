@@ -9,7 +9,7 @@ export default function About() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <section className="py-24 md:py-40 min-h-screen flex items-center">
         <div className="container-grid items-center gap-12 md:gap-20">
@@ -19,6 +19,8 @@ export default function About() {
                  <img 
                    src={about.profile_image} 
                    alt="Profile" 
+                   loading="eager"
+                   decoding="async"
                    className="w-full h-full object-cover"
                  />
                ) : (

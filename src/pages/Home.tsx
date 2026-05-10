@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { useStore } from '../store';
 import { supabase } from '../lib/supabase';
-import mainImgFallback from '../assets/1.png';
-import sideImgFallback from '../assets/2.png';
+
 
 export default function Home() {
   const { homepage, portfolio, categories, about, globalSettings } = useStore();
@@ -41,7 +40,7 @@ export default function Home() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <section className="relative min-h-screen flex items-center pt-24 overflow-hidden">
         <div className="bg-grain" />
@@ -70,7 +69,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: -40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             >
               <h1 className="text-5xl sm:text-6xl md:text-6xl lg:text-[110px] font-display font-bold title-gradient mb-8 md:mb-16 whitespace-pre-wrap">
                 {homepage?.heading}
@@ -80,15 +79,19 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1, delay: 0.4 }}
+              transition={{ duration: 0.6, delay: 0.1 }}
               className="glass-card rounded-[40px] p-6 lg:p-8 max-w-[340px] mx-auto md:mx-0 hidden md:block"
             >
                <div className="aspect-[4/3] rounded-[24px] overflow-hidden mb-6 group cursor-pointer">
-                  <img 
-                    src={homepage?.side_image || sideImgFallback} 
-                    alt="Side Art" 
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
+                  {homepage?.side_image && (
+                    <img 
+                      src={homepage.side_image} 
+                      alt="Side Art" 
+                      loading="eager"
+                      decoding="async"
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    />
+                  )}
                </div>
                <p className="text-[10px] uppercase tracking-[3px] text-text-dim font-bold leading-relaxed">
                  {homepage?.bottom_text}
@@ -101,7 +104,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
               className="relative w-full flex justify-center"
             >
               <div className="relative w-[280px] sm:w-[320px] lg:w-[380px] aspect-[3/4] rounded-[40px] md:rounded-[60px] glass-card border-[1px] border-white shadow-[0_40px_80px_-20px_rgba(154,140,255,0.15)] flex items-center justify-center overflow-hidden">
@@ -115,11 +118,15 @@ export default function Home() {
                    className="relative w-full h-full flex items-center justify-center p-4"
                  >
                    <div className="absolute w-56 h-56 bg-accent/20 blur-[100px] rounded-full crystal-glow" />
-                   <img 
-                     src={homepage?.hero_image || mainImgFallback} 
-                     alt="Main Character" 
-                     className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(154,140,255,0.4)]"
-                   />
+                   {homepage?.hero_image && (
+                     <img 
+                       src={homepage.hero_image} 
+                       alt="Main Character" 
+                       loading="eager"
+                       decoding="async"
+                       className="w-full h-full object-contain relative z-10 drop-shadow-[0_20px_50px_rgba(154,140,255,0.4)]"
+                     />
+                   )}
                  </motion.div>
                  <div className="absolute bottom-0 left-0 right-0 pb-6 px-8 text-center z-20">
                     <div className="w-10 h-0.5 bg-accent/20 mx-auto mb-3" />
@@ -134,7 +141,7 @@ export default function Home() {
             <motion.div
               initial={{ opacity: 0, x: 40 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 1.2, delay: 0.6 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
             >
               <div className="w-12 h-12 rounded-2xl bg-accent/10 flex items-center justify-center mb-6 md:mb-8 mx-auto md:mx-0">
                 <Sparkles className="text-accent" size={24} />
@@ -180,11 +187,11 @@ export default function Home() {
                      initial={{ opacity: 0, y: 40 }}
                      whileInView={{ opacity: 1, y: 0 }}
                      viewport={{ once: true, margin: "-100px" }}
-                     transition={{ duration: 0.8, delay: i * 0.2, ease: [0.16, 1, 0.3, 1] }}
+                     transition={{ duration: 0.6, delay: Math.min(i * 0.1, 0.3), ease: [0.16, 1, 0.3, 1] }}
                      className="glass-card rounded-[30px] md:rounded-[40px] overflow-hidden group cursor-pointer block"
                   >
                      <div className="aspect-[4/5] relative bg-black/5 overflow-hidden">
-                        <img src={work.image_url} alt={work.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
+                        <img src={work.image_url} alt={work.title} loading="lazy" decoding="async" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 ease-out" />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                      </div>
                      <div className="p-6 md:p-8">
@@ -210,7 +217,7 @@ export default function Home() {
            <div className="col-span-12 md:col-span-4 flex justify-center md:justify-end">
              <div className="w-56 h-56 md:w-80 md:h-80 rounded-[40px] md:rounded-[60px] border-[10px] border-white shadow-2xl overflow-hidden glass-card">
                 {about?.profile_image ? (
-                   <img src={about.profile_image} className="w-full h-full object-cover" alt="Profile" />
+                   <img src={about.profile_image} loading="lazy" decoding="async" className="w-full h-full object-cover" alt="Profile" />
                 ) : (
                    <div className="w-full h-full flex items-center justify-center text-text-dim text-xs">No Image</div>
                 )}

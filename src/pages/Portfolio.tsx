@@ -60,7 +60,7 @@ export default function Portfolio() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      transition={{ duration: 1, ease: 'easeOut' }}
+      transition={{ duration: 0.6, ease: 'easeOut' }}
     >
       <section className="py-40 min-h-screen">
         <div className="container-grid">
@@ -119,10 +119,10 @@ export default function Portfolio() {
                 <motion.div
                   key={work.id}
                   className={`${i % 2 !== 0 ? 'md:mt-48' : ''}`}
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.1 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.5, delay: Math.min(i * 0.05, 0.2) }}
                 >
                   <div 
                     className="group cursor-pointer"
@@ -132,6 +132,8 @@ export default function Portfolio() {
                        <img 
                          src={work.image_url} 
                          alt={work.title} 
+                         loading="lazy"
+                         decoding="async"
                          className="w-full h-full object-cover rounded-[48px] group-hover:scale-105 transition-transform duration-1000"
                        />
                     </div>
@@ -201,6 +203,7 @@ export default function Portfolio() {
                 <img 
                   src={currentWork.image_url} 
                   alt={currentWork.title}
+                  decoding="async"
                   className="max-w-full max-h-[70vh] object-contain rounded-[20px] md:rounded-[30px] shadow-2xl shadow-black/40"
                 />
               </div>
